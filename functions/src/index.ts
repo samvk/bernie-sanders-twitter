@@ -8,9 +8,6 @@ import { tweetEnhancer, twitterImageUrlEnlarger } from './helper';
 const app = dialogflow({ debug: true });
 
 app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
-
-    conv.ask(new SimpleResponse("Here's the latest tweet from Bernie Sanders..."));
-
     try {
         const {
             user,
@@ -32,26 +29,29 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
             speech: excapeXml(tweetText),
         }));
 
-        if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
-            conv.ask(new BasicCard({
-                title: name,
-                subtitle: description,
-                text: tweetText,
-                buttons: new Button({
-                    title: 'Read more',
-                    url: `https://twitter.com/statuses/${id_str}`,
-                }),
-                image: new Image({
-                    url: profileImageUrl,
-                    alt: `${user.name} profile image`,
-                }),
-                display: 'WHITE',
-            }));
-            conv.ask(new Suggestions(['Donate $2.70', 'Donate $27', 'Donate more!']));
-            // conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-twitter' }));
-        } else {
+        if (!conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
             conv.close();
+            return;
         }
+
+        conv.ask(new BasicCard({
+            title: name,
+            subtitle: description,
+            text: tweetText,
+            buttons: new Button({
+                title: 'Read more',
+                url: `https://twitter.com/statuses/${id_str}`,
+            }),
+            image: new Image({
+                url: profileImageUrl,
+                alt: `${user.name} profile image`,
+            }),
+            display: 'WHITE',
+        }));
+        // conv.ask(new Suggestions(['Donate $2.70', 'Donate $27', 'Donate more!']));
+        conv.ask(new Suggestions(['Donate $2.70']));
+        conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-twitter' }));
+        // conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!2', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-twitter2' }));
     } catch (error) {
         console.log(error);
         conv.close('Sorry, something went wrong.');
