@@ -2,6 +2,7 @@ import { dialogflow, SimpleResponse, BasicCard, Button, Image, Suggestions, Link
 import * as functions from 'firebase-functions';
 import getTweet from './get-tweet';
 import { excapeXml } from './util';
+import { twitterImageUrlEnlarger } from './helper';
 
 /** **** DIALOGFLOW ***** */
 const app = dialogflow({ debug: true });
@@ -19,8 +20,10 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
         const {
             name,
             description,
-            profile_image_url_https
+            profile_image_url_https,
         } = user;
+
+        const profileImageUrl = twitterImageUrlEnlarger(profile_image_url_https);
 
         if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
             conv.ask(new BasicCard({
@@ -32,7 +35,7 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
                     url: user.url,
                 }),
                 image: new Image({
-                    url: profile_image_url_https,
+                    url: profileImageUrl,
                     alt: `${user.name} profile image`,
                 }),
                 display: 'WHITE',
