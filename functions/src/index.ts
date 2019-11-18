@@ -1,4 +1,4 @@
-import { dialogflow, SimpleResponse, BasicCard, Button, Image, Suggestions, LinkOutSuggestion } from 'actions-on-google';
+import { dialogflow, SimpleResponse, BasicCard, Button, Image, LinkOutSuggestion } from 'actions-on-google';
 import * as functions from 'firebase-functions';
 import getTweet from './get-tweet';
 import { escapeXml } from './util';
@@ -48,10 +48,7 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
             }),
             display: 'WHITE',
         }));
-        // conv.ask(new Suggestions(['Donate $2.70', 'Donate $27', 'Donate more!']));
-        conv.ask(new Suggestions(['Donate $2.70']));
-        conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-twitter' }));
-        // conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!2', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-twitter2' }));
+        conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-soundboard' }));
     } catch (error) {
         console.log(error);
         conv.close('Sorry, something went wrong.');
