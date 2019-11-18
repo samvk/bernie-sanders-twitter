@@ -1,0 +1,30 @@
+{
+  "name": "bernie-sanders-twitter",
+  "description": "Ok Google, talk to Bernie Sanders's Twitter",
+  "author": "Sam Kauffman",
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "build": "tsc",
+    "serve": "firebase serve --only functions",
+    "shell": "firebase experimental:functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "dependencies": {
+    "@types/actions-on-google": "^1.10.2",
+    "actions-on-google": "^2.0.0",
+    "firebase-admin": "^6.4.0",
+    "firebase-functions": "^2.1.0",
+    "twit": "^2.2.11"
+  },
+  "devDependencies": {
+    "@types/twit": "^2.2.23",
+    "tslint": "^5.16.0",
+    "typescript": "^3.4.5"
+  },
+  "engines": {
+    "node": "8"
+  }
+}
