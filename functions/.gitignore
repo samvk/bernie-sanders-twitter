@@ -1,5 +1,3 @@
-config.ts
-
 ## Compiled JavaScript files
 **/*.js
 **/*.js.map
