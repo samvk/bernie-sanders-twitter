@@ -6,9 +6,15 @@ import Status = Twit.Twitter.Status;
 const twit = new Twit(TWIT_CONFIG);
 
 // `count` applies *before* filter params (which is weird) meaning we need to pad the count we grab
+const tweetParams = {
+    screen_name: 'BernieSanders',
+    count: 5,
+    include_rts: false, // undocumented: returns full text as `full_text` key
+};
+
 const getLatestTweet = () => (
     twit
-        .get('statuses/user_timeline', { screen_name: 'BernieSanders', count: 10, include_rts: false })
+        .get('statuses/user_timeline', tweetParams)
         .then(({ data }) => (data as Status[])[0])
 );
 
