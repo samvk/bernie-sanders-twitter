@@ -2,7 +2,7 @@ import { dialogflow, SimpleResponse, BasicCard, Button, Image, Suggestions, Link
 import * as functions from 'firebase-functions';
 import getTweet from './get-tweet';
 import { excapeXml } from './util';
-import { twitterImageUrlEnlarger } from './helper';
+import { tweetEnhancer, twitterImageUrlEnlarger } from './helper';
 
 /** **** DIALOGFLOW ***** */
 const app = dialogflow({ debug: true });
@@ -14,25 +14,32 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
     try {
         const {
             user,
-            text = '',
+            full_text = '',
         } = await getTweet();
 
         const {
+            id_str,
             name,
             description,
             profile_image_url_https,
         } = user;
 
+        const tweetText = tweetEnhancer(full_text);
         const profileImageUrl = twitterImageUrlEnlarger(profile_image_url_https);
+
+        conv.ask(new SimpleResponse({
+            text: "Here's the latest tweet from Bernie Sanders...",
+            speech: excapeXml(tweetText),
+        }));
 
         if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
             conv.ask(new BasicCard({
                 title: name,
                 subtitle: description,
-                text: text,
+                text: tweetText,
                 buttons: new Button({
                     title: 'Read more',
-                    url: user.url,
+                    url: `https://twitter.com/statuses/${id_str}`,
                 }),
                 image: new Image({
                     url: profileImageUrl,
@@ -43,10 +50,7 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
             conv.ask(new Suggestions(['Donate $2.70', 'Donate $27', 'Donate more!']));
             // conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-twitter' }));
         } else {
-            conv.close(new SimpleResponse({
-                speech: excapeXml(text),
-                text: text,
-            }));
+            conv.close();
         }
     } catch (error) {
         console.log(error);
