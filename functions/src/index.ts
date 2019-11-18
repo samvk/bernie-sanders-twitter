@@ -13,14 +13,19 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
     try {
         const {
             user,
-            profile_image_url_https,
-            text,
+            text = '',
         } = await getTweet();
+
+        const {
+            name,
+            description,
+            profile_image_url_https
+        } = user;
 
         if (conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
             conv.ask(new BasicCard({
-                title: user.name,
-                subtitle: user.description,
+                title: name,
+                subtitle: description,
                 text: text,
                 buttons: new Button({
                     title: 'Read more',
