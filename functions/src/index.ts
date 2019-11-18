@@ -33,12 +33,12 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
                 display: 'WHITE',
             }));
             conv.ask(new Suggestions(['Donate $2.70', 'Donate $27', 'Donate more!']));
-            // conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-twitter' }));        
+            // conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-twitter' }));
         } else {
             conv.close(new SimpleResponse({
                 speech: excapeXml(text),
                 text: text,
-            }));        
+            }));
         }
     } catch (error) {
         console.log(error);
