@@ -44,7 +44,13 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
         console.log(error);
         conv.close('Sorry, something went wrong.');
     }
+});
 
+app.intent(['actions_intent_CANCEL', 'actions_intent_NO_INPUT', 'Default Fallback Intent'], (conv) => {
+    conv.close(new SimpleResponse({
+        speech: `<speak><break time="1ms"/></speak>`, // HACK::there must be a way to have a silent conv.close()...
+        text: `👋🇺🇸`,
+    }));
 });
 
 exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
