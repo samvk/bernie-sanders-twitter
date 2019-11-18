@@ -4,6 +4,6 @@ export const twitterImageUrlEnlarger = (url: string) => url.replace('_normal', '
 
 export const tweetEnhancer = (tweetText: string) => (
     tweetText
-        .replace(/\\n\\n/gi, '  \n') // make newlines dialogflow-compliant URLS
+        .replace(/\n\n/gi, '  \n') // make newlines dialogflow-compliant URLS
         .replace(/\s*https?:\/\/(www.)?t(witter)?.com?\/\w+/gi, '') // remove twitter URLS
 )
