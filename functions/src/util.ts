@@ -1,4 +1,4 @@
-export const excapeXml = (str: string) => (
+export const escapeXml = (str: string) => (
     str.replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')

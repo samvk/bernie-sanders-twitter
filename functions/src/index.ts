@@ -1,7 +1,7 @@
 import { dialogflow, SimpleResponse, BasicCard, Button, Image, Suggestions, LinkOutSuggestion } from 'actions-on-google';
 import * as functions from 'firebase-functions';
 import getTweet from './get-tweet';
-import { excapeXml } from './util';
+import { escapeXml } from './util';
 import { tweetEnhancer, twitterImageUrlEnlarger } from './helper';
 
 /** **** DIALOGFLOW ***** */
@@ -26,7 +26,7 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
 
         conv.ask(new SimpleResponse({
             text: "Here's the latest tweet from Bernie Sanders...",
-            speech: excapeXml(tweetText),
+            speech: escapeXml(tweetText),
         }));
 
         if (!conv.surface.capabilities.has('actions.capability.SCREEN_OUTPUT')) {
