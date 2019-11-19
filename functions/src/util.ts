@@ -4,5 +4,4 @@ export const escapeXml = (str: string) => (
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&apos;')
-        .replace(/\r?\n/g, '<br>')
 );
