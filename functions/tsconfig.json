@@ -12,8 +12,5 @@
     "target": "es6"
   },
   "compileOnSave": true,
-  "include": [
-    "src",
-    "test"
-  ]
+  "include": ["src"]
 }

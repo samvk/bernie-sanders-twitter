@@ -1,7 +1,7 @@
 import {
     twitterImageUrlEnlarger,
     tweetEnhancer,
-} from '../src/helper';
+} from '../helper';
 
 test('twitterImageUrlEnlarger returns the URL for a larger image', () => {
     expect(

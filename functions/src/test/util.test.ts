@@ -1,6 +1,6 @@
 import {
     escapeXml,
-} from '../src/util';
+} from '../util';
 
 test('escapeXml escapes XML special characters', () => {
     expect(
