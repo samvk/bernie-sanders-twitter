@@ -1,7 +1,7 @@
 import { dialogflow, SimpleResponse, BasicCard, Button, Image, LinkOutSuggestion } from 'actions-on-google';
 import * as functions from 'firebase-functions';
 import getTweet from './get-tweet';
-import { escapeXml } from './util';
+import { escapeXml, randomPop } from './util';
 import { tweetEnhancer, twitterImageUrlEnlarger } from './helper';
 
 /** **** DIALOGFLOW ***** */
@@ -48,7 +48,12 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
             }),
             display: 'WHITE',
         }));
-        conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-soundboard' }));
+        // Actions on Google does not support donation links yet (https://developers.google.com/assistant/console/policies/general-policies#transactions)
+        // conv.ask(new LinkOutSuggestion({ name: '❤️ Donate Now!', url: 'https://secure.actblue.com/donate/samvk-for-sanders?refcode=bernie-sanders-soundboard' }));
+        conv.ask(new LinkOutSuggestion({
+            name: randomPop(['💕 Join the movement', '🇺🇸 Join the movement', '❤️ Support!', '🔥 Feel The Bern!']),
+            url: 'https://berniesanders.com',
+        }));
     } catch (error) {
         console.log(error);
         conv.close('Sorry, something went wrong.');
