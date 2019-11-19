@@ -9,7 +9,8 @@ const twit = new Twit(TWIT_CONFIG);
 const tweetParams = {
     screen_name: 'BernieSanders',
     count: 5,
-    include_rts: false, // undocumented: returns full text as `full_text` key
+    include_rts: false,
+    tweet_mode: 'extended', // undocumented: returns full text as `full_text` key
 };
 
 const getLatestTweet = () => (
