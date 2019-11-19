@@ -10,12 +10,12 @@ const app = dialogflow({ debug: true });
 app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
     try {
         const {
+            id_str,
             user,
             full_text = '',
         } = await getTweet();
 
         const {
-            id_str,
             name,
             description,
             profile_image_url_https,
