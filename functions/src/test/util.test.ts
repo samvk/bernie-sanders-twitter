@@ -1,6 +1,13 @@
 import {
+    randomPop,
     escapeXml,
 } from '../util';
+
+test('randomPop returns a random item from the array (mocked)', () => {
+    const mathRandomSpy = jest.spyOn(Math, 'random').mockReturnValue(0);
+    expect(randomPop(['alpha', 'bravo'])).toBe('alpha');
+    mathRandomSpy.mockRestore();
+});
 
 test('escapeXml escapes XML special characters', () => {
     expect(
