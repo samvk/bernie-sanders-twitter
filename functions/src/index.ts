@@ -19,6 +19,7 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
             name,
             description,
             profile_image_url_https,
+            screen_name,
         } = user;
 
         const tweetText = tweetEnhancer(full_text);
@@ -40,7 +41,7 @@ app.intent(['Default Welcome Intent', 'talk'], async (conv) => {
             text: tweetText,
             buttons: new Button({
                 title: 'Read more',
-                url: `https://twitter.com/statuses/${id_str}`,
+                url: `https://twitter.com/${screen_name}/status/${id_str}`,
             }),
             image: new Image({
                 url: profileImageUrl,
